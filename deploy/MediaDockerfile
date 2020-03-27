@@ -1,0 +1,10 @@
+FROM java:8
+WORKDIR /usr/local/media
+VOLUME /usr/local/media
+ADD application-0.0.1-SNAPSHOT.jar app.jar
+COPY config config
+COPY lib lib
+EXPOSE 10088
+CMD ["java","-jar","app.jar"]
+
+

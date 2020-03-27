@@ -1,0 +1,12 @@
+douban:
+  apikey:
+    search: 0dad551ec0f84ed02907ff5c42e8ec70
+    search_bak: 02646d3fb69a52ff072d47bf23cef8fd
+    custom: 0b2bdeda43b5688921839c8ecb20399b
+    custom_bak: 0df993c66c0c636e29ecbb5344252a4a
+
+server:
+  port: 10088
+  servlet:
+    context-path: /api
+  max-http-header-size: 60000

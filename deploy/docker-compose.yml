@@ -1,0 +1,51 @@
+version: '3'
+services:
+  vue:
+    build: 
+      context: .
+      dockerfile: VueDockerfile
+    restart: always
+    container_name: vue
+    image: vue:v1
+    links:
+      - backend:backend    
+    ports: 
+      - 9527:80
+    depends_on:
+      - backend
+  db:
+    restart: always
+    build:
+      context: .
+      dockerfile: DBDockerfile
+    container_name: db
+    image: db:v1
+    ports:
+      - 3306:3306
+    environment:
+      TZ: Asia:Shanghai
+      MYSQL_ROOT_PASSWORD: "admin123"
+    command:
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_general_ci
+      --explicit_defaults_for_timestamp=true
+      --lower_case_table_names=1
+      --max_allowed_packet=128M
+      --sql-mode="STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION,NO_ZERO_DATE,NO_ZERO_IN_DATE,ERROR_FOR_DIVISION_BY_ZERO"
+  backend:
+    restart: always
+    image: backend:v1
+    build: 
+      context: .
+      dockerfile: MediaDockerfile
+    container_name: backend
+    privileged: true
+    links:
+      - db:db
+    depends_on:
+      - db
+    ports:
+      - 10088:10088
+    volumes:
+      - /media:/videos
+  

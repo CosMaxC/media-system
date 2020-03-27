@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://db/media?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false
+#    url: jdbc:mysql://192.168.163.130:3306/media?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: "admin123"
+    hikari:
+      minimum-idle: 5
+      idle-timeout: 600000
+      maximum-pool-size: 10
+      auto-commit: true
+      pool-name: MyHikariCP
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      connection-test-query: SELECT 1
+
+mybatis-plus:
+  mapper-locations: mapper/*Mapper.xml
+#  mapper-locations: classpath*:com/cosmax/media/system/db/provider/mapper/xml/*Mapper.xml
+  type-aliases-package: com.cosmax.media.system.commons.domain.douban
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

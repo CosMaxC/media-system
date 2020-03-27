@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cosmax.media.system.db.provider.mapper.DoubanInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cosmax.media.system.commons.domain.douban.DoubanInfo">
+        <id column="douban_id" property="doubanId" />
+        <result column="star_count" property="starCount" />
+        <result column="score" property="score" />
+        <result column="made_by" property="madeBy" />
+        <result column="year" property="year" />
+        <result column="cost_time" property="costTime" />
+        <result column="on_time" property="onTime" />
+        <result column="eng_name" property="engName" />
+        <result column="douban_link" property="doubanLink" />
+        <result column="avatar_path" property="avatarPath" />
+        <result column="poster_path" property="posterPath" />
+        <result column="sub_type" property="subType" />
+        <result column="cn_name" property="cnName" />
+        <result column="brief" property="brief" />
+    </resultMap>
+    <resultMap id="resultMap" type="com.cosmax.media.system.commons.response.DoubanResponse">
+        <id column="douban_id" property="doubanId" />
+        <result column="star_count" property="starCount" />
+        <result column="score" property="score" />
+        <result column="made_by" property="madeBy" />
+        <result column="year" property="year" />
+        <result column="cost_time" property="costTime" />
+        <result column="on_time" property="onTime" />
+        <result column="eng_name" property="engName" />
+        <result column="douban_link" property="doubanLink" />
+        <result column="avatar_path" property="avatarPath" />
+        <result column="poster_path" property="posterPath" />
+        <result column="sub_type" property="subType" />
+        <result column="cn_name" property="cnName" />
+        <result column="brief" property="brief" />
+        <collection property="directorList"
+                    ofType="com.cosmax.media.system.commons.domain.douban.Star"
+                    select="com.cosmax.media.system.db.provider.mapper.StarMapper.getDirectorListByVideoId" column="douban_id">
+        </collection>
+        <collection property="writerList"
+                    ofType="com.cosmax.media.system.commons.domain.douban.Star"
+                    select="com.cosmax.media.system.db.provider.mapper.StarMapper.getWriterListByVideoId" column="douban_id">
+        </collection>
+        <collection property="starList"
+                    ofType="com.cosmax.media.system.commons.domain.douban.Star"
+                    select="com.cosmax.media.system.db.provider.mapper.StarMapper.getStarListByVideoId" column="douban_id">
+        </collection>
+
+    </resultMap>
+    <select id="getDoubanResponseByVideosId" resultMap="resultMap">
+        SELECT
+di.douban_id,
+di.star_count,
+di.score,
+di.made_by,
+di.`year`,
+di.cost_time,
+di.on_time,
+di.eng_name,
+di.douban_link,
+di.avatar_path,
+di.poster_path,
+di.sub_type,
+di.cn_name,
+di.brief
+FROM
+media_video_douban AS mvd
+INNER JOIN douban_info AS di ON mvd.douban_id = di.douban_id
+WHERE
+mvd.item_id = ${id}
+
+    </select>
+
+</mapper>

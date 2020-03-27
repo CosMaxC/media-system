@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cosmax.media.system.db.provider.mapper.SeriesEpisodeMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cosmax.media.system.commons.domain.douban.SeriesEpisode">
+        <id column="series_id" property="seriesId" />
+        <result column="season" property="season" />
+        <result column="episode" property="episode" />
+        <result column="episode_location" property="episodeLocation" />
+    </resultMap>
+
+    <!-- 根据季度分类映射结果 -->
+    <resultMap id="resultMap" type="com.cosmax.media.system.commons.response.SeasonEpisode">
+        <id column="series_id" property="seriesId" />
+        <result column="season" property="seasonNo" />
+        <collection property="seriesEpisodes" column="{id=series_id, season=season}" select="getEpisodesInfosBySeriesIdAndSeason">
+        </collection>
+    </resultMap>
+
+    <select id="getEpisodesInfosBySeriesId" resultMap="resultMap">
+SELECT
+se.season,
+se.series_id,
+si.series_name,
+si.series_location
+FROM
+series_info AS si
+INNER JOIN series_episode AS se ON si.series_id = se.series_id
+WHERE
+si.series_id = #{id}
+GROUP BY
+se.series_id,
+se.season
+ORDER BY
+se.season ASC
+
+    </select>
+    <select id="getEpisodesInfosBySeriesIdAndSeason" resultMap="BaseResultMap">
+        SELECT
+se.series_id,
+se.season,
+se.episode,
+se.episode_location
+FROM
+series_episode AS se
+WHERE
+se.series_id = #{id}
+AND
+se.season = #{season}
+ORDER BY
+se.season ASC,
+se.episode ASC
+
+    </select>
+</mapper>

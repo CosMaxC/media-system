@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cosmax.media.system.db.provider.mapper.StarMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cosmax.media.system.commons.domain.douban.Star">
+        <id column="star_id" property="starId" />
+        <result column="star_name" property="starName" />
+        <result column="star_img" property="starImg" />
+        <result column="star_brief" property="starBrief" />
+    </resultMap>
+    <select id="getDirectorListByVideoId" resultMap="BaseResultMap">
+SELECT
+star.star_id,
+star.star_name,
+star.star_img,
+star.star_brief
+FROM
+douban_director
+INNER JOIN star ON douban_director.director_id = star.star_id
+WHERE
+douban_director.douban_id = #{id}
+order by star.star_name
+
+    </select>
+    <select id="getWriterListByVideoId" resultMap="BaseResultMap">
+SELECT
+star.star_id,
+star.star_name,
+star.star_img,
+star.star_brief
+FROM
+douban_writer
+INNER JOIN star ON douban_writer.writer_id = star.star_id
+WHERE
+douban_writer.douban_id = #{id}
+order by star.star_name
+    </select>
+    <select id="getStarListByVideoId" resultMap="BaseResultMap">
+SELECT
+star.star_id,
+star.star_name,
+star.star_img,
+star.star_brief
+FROM
+douban_star
+INNER JOIN star ON douban_star.star_id = star.star_id
+WHERE
+douban_star.douban_id = #{id}
+order by star.star_name
+    </select>
+</mapper>

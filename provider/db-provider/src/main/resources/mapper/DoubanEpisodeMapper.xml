@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cosmax.media.system.db.provider.mapper.DoubanEpisodeMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cosmax.media.system.commons.domain.douban.DoubanEpisode">
+        <id column="douban_id" property="doubanId" />
+        <result column="douban_episode" property="doubanEpisode" />
+        <result column="name_cn" property="nameCn" />
+        <result column="name_en" property="nameEn" />
+        <result column="play_time" property="playTime" />
+        <result column="episode_brief" property="episodeBrief" />
+    </resultMap>
+
+</mapper>
